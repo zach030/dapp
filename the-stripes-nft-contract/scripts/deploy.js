@@ -6,7 +6,7 @@ async function main() {
     console.log("Account balance:", (await deployer.getBalance()).toString());
   
     const Token = await ethers.getContractFactory("TheStripesNFT");
-    const token = await Token.deploy();
+    const token = await Token.deploy("First NFT","NFT","ipfs://QmexqcLDvoP6HCTtSGumG3yzhZdH8guvV3z3kReCvf2QKn");
   
     console.log("Token address:", token.address);
   }
