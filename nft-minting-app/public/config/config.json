@@ -2,9 +2,9 @@
   "CONTRACT_ADDRESS": "0x2AeB6bfdc3F6A3cfE56cD8e9D62EEFE1594B6944",
   "SCAN_LINK": "https://goerli.etherscan.io/address/0x2AeB6bfdc3F6A3cfE56cD8e9D62EEFE1594B6944",
   "NETWORK": {
-    "NAME": "Goerli",
-    "SYMBOL": "GoerliETH",
-    "ID": 5
+    "NAME": "Ethereum",
+    "SYMBOL": "ETH",
+    "ID": 1
   },
   "NFT_NAME": "First NFT",
   "SYMBOL": "NFT",
