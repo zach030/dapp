@@ -5,7 +5,7 @@ pragma solidity ^0.8.7;
 import "contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "contracts/access/Ownable.sol";
 
-contract TheStripesNFT is ERC721Enumerable, Ownable {
+contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
     using Strings for uint256;
     bool private _blindBoxOpened = false;
     string private _blindTokenURI = "ipfs://QmexqcLDvoP6HCTtSGumG3yzhZdH8guvV3z3kReCvf2QKn"; // 盲盒uri
