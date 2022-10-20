@@ -18,7 +18,6 @@ contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
         _blindBoxOpened = _status;
     }
     string public baseURI;
-    string public baseExtension = ".json";
     uint256 public cost = 0.02 ether;
     uint256 public maxSupply = 10000;
     bool public paused = false;
@@ -80,7 +79,7 @@ contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
             return
                 bytes(currentBaseURI).length > 0
                     ? string(
-                        abi.encodePacked(currentBaseURI, tokenId.toString(), baseExtension)
+                        abi.encodePacked(currentBaseURI, tokenId.toString())
                     )
                     : "";
         } else {
@@ -95,13 +94,6 @@ contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
 
     function setBaseURI(string memory _newBaseURI) public onlyOwner {
         baseURI = _newBaseURI;
-    }
-
-    function setBaseExtension(string memory _newBaseExtension)
-        public
-        onlyOwner
-    {
-        baseExtension = _newBaseExtension;
     }
 
     function pause(bool _state) public onlyOwner {

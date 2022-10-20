@@ -26,6 +26,8 @@ interface IERC165 {
 
 // File contracts/token/ERC721/IERC721.sol
 
+
+
 pragma solidity ^0.8.0;
 
 /**
@@ -187,6 +189,7 @@ interface IERC721 is IERC165 {
 // File contracts/token/ERC721/IERC721Receiver.sol
 
 
+
 pragma solidity ^0.8.0;
 
 /**
@@ -216,6 +219,7 @@ interface IERC721Receiver {
 // File contracts/token/ERC721/extensions/IERC721Metadata.sol
 
 
+
 pragma solidity ^0.8.0;
 
 /**
@@ -241,6 +245,7 @@ interface IERC721Metadata is IERC721 {
 
 
 // File contracts/utils/Address.sol
+
 
 
 pragma solidity ^0.8.0;
@@ -499,6 +504,7 @@ library Address {
 // File contracts/utils/Context.sol
 
 
+
 pragma solidity ^0.8.0;
 
 /**
@@ -523,6 +529,7 @@ abstract contract Context {
 
 
 // File contracts/utils/Strings.sol
+
 
 
 pragma solidity ^0.8.0;
@@ -598,6 +605,7 @@ library Strings {
 // File contracts/utils/introspection/ERC165.sol
 
 
+
 pragma solidity ^0.8.0;
 
 /**
@@ -631,6 +639,7 @@ abstract contract ERC165 is IERC165 {
 
 
 // File contracts/token/ERC721/ERC721.sol
+
 
 
 pragma solidity ^0.8.0;
@@ -1131,6 +1140,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
 // File contracts/token/ERC721/extensions/IERC721Enumerable.sol
 
 
+
 pragma solidity ^0.8.0;
 
 /**
@@ -1161,6 +1171,8 @@ interface IERC721Enumerable is IERC721 {
 
 
 // File contracts/token/ERC721/extensions/ERC721Enumerable.sol
+
+
 
 pragma solidity ^0.8.0;
 
@@ -1353,6 +1365,7 @@ abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
 // File contracts/access/Ownable.sol
 
 
+
 pragma solidity ^0.8.0;
 
 /**
@@ -1447,11 +1460,9 @@ contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
         _blindBoxOpened = _status;
     }
     string public baseURI;
-    string public baseExtension = ".json";
     uint256 public cost = 0.02 ether;
     uint256 public maxSupply = 10000;
     bool public paused = false;
-    mapping(address => bool) public whitelisted;
 
     constructor(
         string memory _initBaseURI
@@ -1473,10 +1484,7 @@ contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
         require(supply + _mintAmount <= maxSupply);
 
         if (msg.sender != owner()) {
-            if (whitelisted[msg.sender] != true) {
-                 //general public
-                require(msg.value >= cost * _mintAmount);
-            }
+            require(msg.value >= cost * _mintAmount);
         }
 
         for (uint256 i = 1; i <= _mintAmount; i++) {
@@ -1511,9 +1519,9 @@ contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
         string memory currentBaseURI = _baseURI();
         if (_blindBoxOpened) {
             return
-                bytes(baseURI).length > 0
+                bytes(currentBaseURI).length > 0
                     ? string(
-                        abi.encodePacked(currentBaseURI, tokenId.toString(), baseExtension)
+                        abi.encodePacked(currentBaseURI, tokenId.toString())
                     )
                     : "";
         } else {
@@ -1530,23 +1538,8 @@ contract ThePoorGhostNFT is ERC721Enumerable, Ownable {
         baseURI = _newBaseURI;
     }
 
-    function setBaseExtension(string memory _newBaseExtension)
-        public
-        onlyOwner
-    {
-        baseExtension = _newBaseExtension;
-    }
-
     function pause(bool _state) public onlyOwner {
         paused = _state;
-    }
-
-    function whitelistUser(address _user) public onlyOwner {
-        whitelisted[_user] = true;
-    }
-
-    function removeWhitelistUser(address _user) public onlyOwner {
-        whitelisted[_user] = false;
     }
 
     function withdraw() public payable onlyOwner {
