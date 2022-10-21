@@ -1,10 +1,10 @@
 {
-  "CONTRACT_ADDRESS": "0x48f480e3d6250d9187482111507253f738e72f98",
-  "SCAN_LINK": "https://goerli.etherscan.io/address/0x48f480e3d6250d9187482111507253f738e72f98",
+  "CONTRACT_ADDRESS": "0x9520366793C6544dE7e070D56bEf771014cF3e77",
+  "SCAN_LINK": "https://etherscan.io/address/0x9520366793C6544dE7e070D56bEf771014cF3e77",
   "NETWORK": {
-    "NAME": "Goerli",
-    "SYMBOL": "GoerliETH",
-    "ID": 5
+    "NAME": "Ethereum",
+    "SYMBOL": "ETH",
+    "ID": 1
   },
   "NFT_NAME": "ThePoorGhostNFT",
   "SYMBOL": "PG",
@@ -13,6 +13,6 @@
   "DISPLAY_COST": 0.02,
   "GAS_LIMIT": 285000,
   "MARKETPLACE": "Opeansea",
-  "MARKETPLACE_LINK": "https://testnets.opensea.io/collection/poor-ghost-v4",
+  "MARKETPLACE_LINK": "https://opensea.io/collection/poor-ghost",
   "SHOW_BACKGROUND": true
 }
