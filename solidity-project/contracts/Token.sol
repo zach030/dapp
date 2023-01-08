@@ -5,9 +5,10 @@ pragma solidity ^0.8.9;
 // import "hardhat/console.sol";
 
 contract Token {
-    constructor(string memory _name,uint128 _price) payable {
-        name = _name;
-        price = _price;
+    constructor(string memory name,string memory symbol,uint128 price) payable {
+        _name = name;
+        _symbol = symbol;
+        _price = price;
         owner = msg.sender;
     }
     fallback() external payable{}
@@ -23,13 +24,31 @@ contract Token {
     }
 
     address public owner;
-    uint256 public totalSupply;
-    string public name;
-    uint128 public price;
-    mapping(address => uint) public balanceOf;
+    uint256 private _totalSupply;
+    string private _name;
+    string private _symbol;
+    uint128 private _price;
+    mapping(address => uint) private balanceOf;
+
+    function totalSupply() view public returns(uint256){
+        return _totalSupply;
+    }
+
+    function getName() view public returns(string memory){
+        return _name;
+    }
+
+    function getSymbol() view public returns(string memory){
+        return _symbol;
+    }
+
+    function getPrice() view public returns(uint128){
+        return _price;
+    }
 
     function transfer(address to, uint256 value) external returns (bool) {
         require(to != address(0), "Token: transfer to the zero address");
+        require(balanceOf[msg.sender] >= value, "insufficient token to transfer");
         balanceOf[msg.sender] -= value;
         balanceOf[to] += value;
         emit Transfer(msg.sender, to, value);
@@ -39,7 +58,7 @@ contract Token {
     function mint(address to,uint amount) external returns (bool){
         require(to != address(0), "Token: mint to the zero address");
         balanceOf[to] += amount;
-        totalSupply += amount;
+        _totalSupply += amount;
         emit Transfer(address(0), to, amount);
         return true;
     }
@@ -49,7 +68,7 @@ contract Token {
         require(balanceOf[msg.sender] >= value, "insufficient token to sell");
         uint256 redeemAmount = value * 600;
         require(address(this).balance > redeemAmount, "insufficient balance to redeem token");
-        totalSupply -= value;
+        _totalSupply -= value;
         balanceOf[msg.sender] -= value;
         payable(msg.sender).transfer(value * 600 wei);
         emit Sell(msg.sender, value);
