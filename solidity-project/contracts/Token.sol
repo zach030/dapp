@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
+import "./CustomLib.sol";
 
 contract Token {
     constructor(string memory name,string memory symbol,uint128 price) payable {
@@ -13,7 +14,8 @@ contract Token {
     }
     fallback() external payable{}
     receive() external payable{}
-    
+
+    using customLib for uint256;
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Mint(address indexed to, uint256 value);
     event Sell(address indexed from, uint256 value);
@@ -59,7 +61,7 @@ contract Token {
         require(to != address(0), "Token: mint to the zero address");
         balanceOf[to] += amount;
         _totalSupply += amount;
-        emit Transfer(address(0), to, amount);
+        emit Mint(to, amount);
         return true;
     }
 
@@ -70,7 +72,7 @@ contract Token {
         require(address(this).balance > redeemAmount, "insufficient balance to redeem token");
         _totalSupply -= value;
         balanceOf[msg.sender] -= value;
-        payable(msg.sender).transfer(value * 600 wei);
+        redeemAmount.customSend(msg.sender);
         emit Sell(msg.sender, value);
         return true;
     }
